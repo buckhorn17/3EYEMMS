@@ -1,0 +1,94 @@
+.icon {
+    &-ig {
+        img {
+            transition: 0.2s;
+        }
+
+        &:hover {
+            img {
+                content: url(/assets/images/website-30.png);
+                transform: translateY(-2px);
+            }
+        }
+
+        // position: relative;
+        // img {
+        //     position:absolute;
+        //     -webkit-transition: opacity .2s ease-in-out;
+        //     -moz-transition: opacity .2s ease-in-out;
+        //     -o-transition: opacity .2s ease-in-out;
+        //     transition: opacity .2s ease-in-out;
+        //     &:nth-of-type(2):hover {
+        //         opacity: 0;
+        //     }
+        // }
+    }
+
+    &-fb {
+        img {
+            transition: 0.2s;
+        }
+
+        &:hover {
+            img {
+                content: url(/assets/images/website-32.png);
+                transform: translateY(-2px);
+            }
+        }
+    }
+
+    &-info {
+        img {
+            transition: 0.2s;
+        }
+
+        &:hover {
+            img {
+                content: url(/assets/images/website-31.png);
+                transform: translateY(-2px);
+            }
+        }
+    }
+
+    &-project {
+        img {
+            transition: 0.2s;
+        }
+
+        &:hover {
+            img {
+                content: url(/assets/images/website-33.png);
+                transform: translateY(-2px);
+            }
+        }
+    }
+
+    &-connect {
+        img {
+            transition: 0.2s;
+        }
+
+        &:hover {
+            img {
+                content: url(/assets/images/website-34.png);
+                transform: translateY(-2px);
+            }
+        }
+    }
+
+    &-dc {
+        pointer-events: none;
+
+        img {
+            transition: 0.2s;
+        }
+
+        &:hover {
+            img {
+                content: url(/assets/images/website-34.png);
+                transform: translateY(-2px);
+            }
+        }
+    }
+
+}

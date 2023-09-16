@@ -1,0 +1,19 @@
+footer{
+  position: relative;
+  .card-frame{
+    max-width: 100%;
+    transform: translateY(-177px);
+  }
+
+  .copyright{
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-bottom: 57px;
+  }
+
+
+
+}

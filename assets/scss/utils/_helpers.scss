@@ -1,0 +1,17 @@
+.list-none {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.ls {
+    &-0 {
+        letter-spacing: 0px;
+    }
+    @media (max-width: 991px) {
+        &-lg-0{
+            letter-spacing: 0px;
+        }
+    }
+
+}
+

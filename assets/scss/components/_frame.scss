@@ -1,0 +1,64 @@
+.card-frame {
+    padding: 23px 20px;
+    position: relative;
+    background: url('/assets/images/website-46.png');
+    background-size: cover;
+    border: 3px double black !important;
+
+    &-title {
+        height: 36px;
+        width: 100%;
+        border-top: 3px double black !important;
+        border-bottom: 3px double black !important;
+        border-left: 1px solid black !important;
+        border-right: 1px solid black !important;
+        margin-bottom: 23px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            z-index: 1;
+        }
+        &::before {
+            content: "";
+            position: absolute;
+            border-right: 1px solid black;
+            height: 30px;
+            width: 30px;
+            background-image: url(/web-layout-training-vite/assets/images/website-02.png);
+            background-color: #C6C8BD;
+            background-repeat: no-repeat;
+            left: 21px;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            background-image: url(/web-layout-training-vite/assets/images/website-00.png);
+            background-color: #C6C8BD;
+            background-repeat: no-repeat;
+            width: 88px;
+            height: 30px;
+            right: 21px;
+        }
+
+    }
+
+
+    &-bg {
+        padding: 10px;
+        background-color: black;
+        .card-line{
+            border-bottom: 1px solid $primary;
+            width: 60%;
+            margin: auto;
+        }
+    }
+}
+
+.tarot-rule {
+    background:
+    linear-gradient(-80deg, transparent 6px, #BCBAB1 0) bottom right, linear-gradient(100deg, transparent 3px, #BCBAB1 0) bottom left, linear-gradient(100deg, transparent 6px, #BCBAB1 0) top left, linear-gradient(-80deg, transparent 3px, #BCBAB1 0) top right;
+    background-size: 50.5% 50.5%;
+    background-repeat: no-repeat;
+  }
