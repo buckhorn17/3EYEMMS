@@ -16,9 +16,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        img{
+
+        img {
             z-index: 1;
         }
+
         &::before {
             content: "";
             position: absolute;
@@ -41,24 +43,132 @@
             height: 30px;
             right: 21px;
         }
-
     }
-
 
     &-bg {
         padding: 10px;
         background-color: black;
-        .card-line{
+
+        .card-line {
             border-bottom: 1px solid $primary;
             width: 60%;
             margin: auto;
         }
     }
+
+    .top-left {
+        position: absolute;
+        top: 92px;
+        left: 30px;
+    }
+
+    .top-right {
+        position: absolute;
+        top: 92px;
+        left: calc(100% - 40px);
+    }
+
+    .bottom-left {
+        position: absolute;
+        top: calc(100% - 43px);
+        left: 30px;
+    }
+
+    .bottom-right {
+        position: absolute;
+        top: calc(100% - 43px);
+        left: calc(100% - 40px);
+    }
+
 }
 
 .tarot-rule {
     background:
-    linear-gradient(-80deg, transparent 6px, #BCBAB1 0) bottom right, linear-gradient(100deg, transparent 3px, #BCBAB1 0) bottom left, linear-gradient(100deg, transparent 6px, #BCBAB1 0) top left, linear-gradient(-80deg, transparent 3px, #BCBAB1 0) top right;
+        linear-gradient(-80deg, transparent 6px, #BCBAB1 0) bottom right, linear-gradient(100deg, transparent 3px, #BCBAB1 0) bottom left, linear-gradient(100deg, transparent 6px, #BCBAB1 0) top left, linear-gradient(-80deg, transparent 3px, #BCBAB1 0) top right;
     background-size: 50.5% 50.5%;
     background-repeat: no-repeat;
+}
+
+.img-set {
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+.container-translateY {
+    transform: translateY(250px);
+
+    @media (max-width: 991px) {
+        transform: translateY(155px);
+    }
+}
+
+.info-translateY {
+    transform: translateY(632px);
+
+    @media (max-width: 1199px) {
+        transform: translateY(250px);
+    }
+
+    @media (max-width: 991px) {
+        transform: translateY(0px);
+    }
+
+    @media (max-width: 768px) {
+        transform: translateY(745px);
+    }
+
+    @media (max-width: 767px) {
+        transform: translateY(540px);
+    }
+
+    @media (max-width: 575px) {
+        transform: translateY(446px);
+    }
+
+    @media (max-width: 454px) {
+        transform: translateY(240px);
+    }
+
+    @media (max-width: 375px) {
+        transform: translateY(484px);
+    }
+}
+
+.modal-dialog {
+
+    &-content-background {
+        background-color: rgba(255, 255, 255, 0) !important;
+        border: 0px !important;
+    }
+
+    &-header-background {
+        border: 0px !important;
+    }
+
+    &-body-background {
+        background-color: rgb(0, 0, 0) !important;
+        filter: drop-shadow(0px 0px 4px #D3FF48);
+    }
+
+    .btn-close {
+        background: url(/assets/images/word/plus-cross.png) no-repeat;
+        border-radius: 50%;
+        transform: translateX(4px);
+        opacity: 0.7;
+    }
+
+}
+
+.flip-animation {
+    animation: flipImage 1.2s ease-in-out;
   }
+  
+  @keyframes flipImage {
+    0% {
+        transform: rotateY(180deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+  }
+  

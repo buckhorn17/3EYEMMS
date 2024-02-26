@@ -7,11 +7,15 @@
     &-0 {
         letter-spacing: 0px;
     }
+
+    &-1 {
+        letter-spacing: 1px;
+    }
+
     @media (max-width: 991px) {
-        &-lg-0{
+        &-lg-0 {
             letter-spacing: 0px;
         }
     }
 
 }
-

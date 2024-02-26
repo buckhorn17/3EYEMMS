@@ -1,0 +1,25 @@
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init({
+
+        // 全域設定:
+        disable: false, // 接受以下值：'phone'（手機）, 'tablet'（平板）, 'mobile'（移動裝置）, 布林值（boolean）, 表達式或函式
+        startEvent: 'DOMContentLoaded', // 文件上派送的事件名稱，AOS 應該在其上初始化
+        initClassName: 'aos-init', // 初始化後套用的類別
+        animatedClassName: 'aos-animate', // 動畫套用的類別
+        useClassNames: false, // 如果為 true，在滾動時將 data-aos 的內容添加為類別
+        disableMutationObserver: false, // 停用自動變異偵測（進階）
+        debounceDelay: 50, // 調整視窗大小時使用的去彈跳（debounce）延遲（進階）
+        throttleDelay: 99, // 捲動頁面時使用的節流延遲（進階）
+
+        // 可以根據每個元素覆寫的設定，使用 data-aos-* 屬性:
+        offset: 120, // 顯示的偏移量
+        delay: 100, // 動畫延遲的時間，1000 = 1 秒
+        duration: 800, // 動畫持續的時間，1000 = 1 秒
+        easing: 'ease', // AOS 動畫的預設緩和函數
+        once: false, // 是否僅顯示一次，true/false
+        mirror: false, // 元素是否在滾動過程中滾出時進行動畫
+        anchorPlacement: 'top-bottom', // 定義元素相對於視窗的位置，觸發動畫
+
+    });
+</script>

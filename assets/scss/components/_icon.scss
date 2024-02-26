@@ -1,94 +1,62 @@
 .icon {
-    &-ig {
-        img {
-            transition: 0.2s;
+    &-community {
+        .image-container {
+            position: relative;
+            width: 111px;
+            height: 111px;
+        }
+
+        .image-container-goTop {
+            position: relative;
+            width: 68px;
+            height: 68px;
+        }
+
+        .normal-image,
+        .hover-image,
+        .normal-image-toTop,
+        .hover-image-toTop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .hover-image {
+            opacity: 0;
+            transform: translateY(-2px);
+        }
+
+        .hover-image-toTop {
+            opacity: 0;
         }
 
         &:hover {
-            img {
-                content: url(/assets/images/website-30.png);
+            .normal-image {
+                opacity: 0;
+                transform: translateY(-2px);
+            }
+
+            .hover-image {
+                opacity: 1;
                 transform: translateY(-2px);
             }
         }
 
-        // position: relative;
-        // img {
-        //     position:absolute;
-        //     -webkit-transition: opacity .2s ease-in-out;
-        //     -moz-transition: opacity .2s ease-in-out;
-        //     -o-transition: opacity .2s ease-in-out;
-        //     transition: opacity .2s ease-in-out;
-        //     &:nth-of-type(2):hover {
-        //         opacity: 0;
-        //     }
-        // }
-    }
-
-    &-fb {
-        img {
-            transition: 0.2s;
-        }
-
         &:hover {
-            img {
-                content: url(/assets/images/website-32.png);
-                transform: translateY(-2px);
+            .normal-image-toTop {
+                opacity: 0;
+            }
+
+            .hover-image-toTop {
+                opacity: 1;
             }
         }
-    }
 
-    &-info {
-        img {
-            transition: 0.2s;
-        }
-
-        &:hover {
-            img {
-                content: url(/assets/images/website-31.png);
-                transform: translateY(-2px);
-            }
-        }
-    }
-
-    &-project {
-        img {
-            transition: 0.2s;
-        }
-
-        &:hover {
-            img {
-                content: url(/assets/images/website-33.png);
-                transform: translateY(-2px);
-            }
-        }
-    }
-
-    &-connect {
-        img {
-            transition: 0.2s;
-        }
-
-        &:hover {
-            img {
-                content: url(/assets/images/website-34.png);
-                transform: translateY(-2px);
-            }
-        }
     }
 
     &-dc {
         pointer-events: none;
-
-        img {
-            transition: 0.2s;
-        }
-
-        &:hover {
-            img {
-                content: url(/assets/images/website-34.png);
-                transform: translateY(-2px);
-            }
-        }
     }
 
 }
