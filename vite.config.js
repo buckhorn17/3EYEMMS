@@ -22,24 +22,6 @@ function moveOutputPlugin() {
   };
 }
 
-// 新增這個函數處理圖片檔案
-function copyImagesPlugin() {
-  return {
-    name: 'copy-images',
-    apply: 'build',
-    async buildStart() {
-      const images = glob.sync('./assets/images/card/inFrame/*.png','./assets/images/card/inFrame/past/*.png','./assets/images/card/inFrame/past/content/*.png','./assets/images/card/inFrame/present/*.png','./assets/images/card/inFrame/present/content/*.png','./assets/images/card/inFrame/future/*.png','./assets/images/card/inFrame/future/content/*.png');
-      images.forEach((image) => {
-        this.emitFile({
-          type: 'asset',
-          fileName: path.basename(image),
-          source: path.resolve(image),
-        });
-      });
-    },
-  };
-}
-
 export default defineConfig({
   // base 的寫法：
   // base: '/Repository 的名稱/'
@@ -48,7 +30,6 @@ export default defineConfig({
     liveReload(['./layout/**/*.ejs', './pages/**/*.ejs', './pages/**/*.html']),
     ViteEjsPlugin(),
     moveOutputPlugin(),
-    copyImagesPlugin(),
   ],
   server: {
     // 啟動 server 時預設開啟的頁面

@@ -39,9 +39,9 @@ tarotButton.addEventListener("click", function() {
 
     // 設定圖片路徑
     let paths = [
-        "/3EYEMMS/assets/images/card/inFrame/past/",
-        "/3EYEMMS/assets/images/card/inFrame/present/",
-        "/3EYEMMS/assets/images/card/inFrame/future/"
+        "../assets/images/card/inFrame/past/",
+        "../assets/images/card/inFrame/present/",
+        "../assets/images/card/inFrame/future/"
     ];
 
     // 隨機不重複地選取圖片
