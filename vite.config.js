@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { defineConfig } from 'vite';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
 import { fileURLToPath } from 'node:url';
@@ -23,31 +22,36 @@ function moveOutputPlugin() {
   };
 }
 
-// 定義將 PNG 檔案複製到 dist 目錄的函數
-function copyPngFilesPlugin() {
+// 新增這個函數處理圖片檔案
+function copyImagesPlugin() {
   return {
-    name: 'copy-png-files',
+    name: 'copy-images',
     apply: 'build',
-    async writeBundle() {
-      // 將 assets\images\card\inFrame 目錄下的所有 PNG 檔案複製到 dist 目錄中
-      const pngFiles = glob.sync('assets/images/card/inFrame/**/*.png');
-      pngFiles.forEach((file) => {
-        const destFilePath = file.replace(/^assets\/images\/card\/inFrame\//, 'dist/');
-        fs.copyFileSync(file, destFilePath);
+    async buildStart() {
+      const images = glob.sync('./assets/images/card/inFrame/*.png','./assets/images/card/inFrame/past/*.png','./assets/images/card/inFrame/past/content/*.png','./assets/images/card/inFrame/present/*.png','./assets/images/card/inFrame/present/content/*.png','./assets/images/card/inFrame/future/*.png','./assets/images/card/inFrame/future/content/*.png');
+      images.forEach((image) => {
+        this.emitFile({
+          type: 'asset',
+          fileName: path.basename(image),
+          source: path.resolve(image),
+        });
       });
     },
   };
 }
 
 export default defineConfig({
+  // base 的寫法：
+  // base: '/Repository 的名稱/'
   base: '/3EYEMMS/',
   plugins: [
     liveReload(['./layout/**/*.ejs', './pages/**/*.ejs', './pages/**/*.html']),
     ViteEjsPlugin(),
     moveOutputPlugin(),
-    copyPngFilesPlugin(), // 將 PNG 檔案複製到 dist 目錄中的插件
+    copyImagesPlugin(),
   ],
   server: {
+    // 啟動 server 時預設開啟的頁面
     open: 'pages/index.html',
   },
   build: {
