@@ -11,12 +11,14 @@
   },
   "devDependencies": {
     "ejs": "^3.1.9",
+    "gh-pages": "^6.1.1",
     "vite": "^4.2.0",
+    "vite-plugin-copy": "^0.1.6",
     "vite-plugin-ejs": "^1.6.4"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
-    "gh-pages": "^5.0.0",
+    "fs": "^0.0.1-security",
     "glob": "^10.2.2",
     "sass": "^1.61.0",
     "sass-loader": "^13.2.2",
