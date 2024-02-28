@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>about</title>
-    <script type="module" crossorigin src="/3EYEMMS/assets/index-be38e978.js"></script>
-    <link rel="stylesheet" href="/3EYEMMS/assets/index-33fe9a1e.css">
-  </head>
-  <body>
-    <header class="navbar navbar-expand-lg border-10 border-top border-dark w-100 py-0" id="header">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3EYEMMS</title>
+  <script type="module" crossorigin src="/3EYEMMS/assets/index-be38e978.js"></script>
+  <link rel="stylesheet" href="/3EYEMMS/assets/index-33fe9a1e.css">
+</head>
+
+<body>
+  <header class="navbar navbar-expand-lg border-10 border-top border-dark w-100 py-0" id="header">
     <div class="container-lg container-fluid px-xxl-20 px-3">
 
 
@@ -60,7 +62,31 @@
         <img src="/3EYEMMS/assets/info_w-844b48da.png" alt="info" class="hover-image-toTop">
     </div>
     </a>
-</div>    <h1>我是about</h1>
+</div>
+    <div class="index-banner mb-6">
+      <div class="container-md container-fluid">
+        <img src="/3EYEMMS/assets/website-19-bad252d9.png" alt="banner-lg" class="w-100 d-md-block d-none">
+        <img src="/3EYEMMS/assets/website-20-0d931201.png" alt="banner-md" class="w-100 d-md-none d-sm-block d-none">
+        <img src="/3EYEMMS/assets/website-21-d29516e3.png" alt="banner" class="w-100 d-sm-none d-block">
+      </div>
+    </div>
+
+
+    <div class="index-info-bg"></div>
+
+    <div class="index-info info-translateY mt-xxl-40 mt-0">
+      <div class="container">
+        <div class="row text-center gy-6">
+          <div class="col-sm-4" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="1000"><img src="/3EYEMMS/assets/website-51-0cd5214b.png" alt="" class="mw-100 img-set"></div>
+          <div class="col-sm-4"><img src="/3EYEMMS/assets/website-54-54387749.png" alt="" class="mw-100 img-set"></div>
+          <div class="col-sm-4 d-flex align-items-center flex-column justify-content-around">
+            <img src="/3EYEMMS/assets/website-55-eda5604b.png" alt="" class="mw-100 img-set mb-sm-0 mb-4">
+            <img src="/3EYEMMS/assets/website-56-6a6c071a.png" alt="" class="mw-100 img-set">
+          </div>
+        </div>
+      </div>
+    </div>
+
     <footer class="container-translateY" id="footer">
 
     <div class="container footer-mt gx-sm-3 gx-17">
@@ -140,7 +166,32 @@
     <div class="copyright fs-9 text-center text-warning-100 lh-base">
         <p>製作　3EYEMMS｜三目道具屋<br>©3EYEMMS by Zazie Zia</p>
     </div>
-</footer>
-    
-  </body>
+</footer>    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init({
+
+        // 全域設定:
+        disable: false, // 接受以下值：'phone'（手機）, 'tablet'（平板）, 'mobile'（移動裝置）, 布林值（boolean）, 表達式或函式
+        startEvent: 'DOMContentLoaded', // 文件上派送的事件名稱，AOS 應該在其上初始化
+        initClassName: 'aos-init', // 初始化後套用的類別
+        animatedClassName: 'aos-animate', // 動畫套用的類別
+        useClassNames: false, // 如果為 true，在滾動時將 data-aos 的內容添加為類別
+        disableMutationObserver: false, // 停用自動變異偵測（進階）
+        debounceDelay: 50, // 調整視窗大小時使用的去彈跳（debounce）延遲（進階）
+        throttleDelay: 99, // 捲動頁面時使用的節流延遲（進階）
+
+        // 可以根據每個元素覆寫的設定，使用 data-aos-* 屬性:
+        offset: 120, // 顯示的偏移量
+        delay: 100, // 動畫延遲的時間，1000 = 1 秒
+        duration: 800, // 動畫持續的時間，1000 = 1 秒
+        easing: 'ease', // AOS 動畫的預設緩和函數
+        once: false, // 是否僅顯示一次，true/false
+        mirror: false, // 元素是否在滾動過程中滾出時進行動畫
+        anchorPlacement: 'top-bottom', // 定義元素相對於視窗的位置，觸發動畫
+
+    });
+</script>
+      
+</body>
+
 </html>
