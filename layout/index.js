@@ -1,91 +1,98 @@
 let tarotCards = document.querySelectorAll(".tarot-card-back");
 let tarotButton = document.querySelector(".tarot-button");
 
-// 获取基础 URL 路径，假设你的静态资源放在 public/assets 目录下
-const baseUrl = new URL('../assets/', import.meta.url);
+// 动态导入卡牌图像资源
+const cardImages = {
+  ...import.meta.globEager('../assets/images/card/inFrame/past/*.png'),
+  ...import.meta.globEager('../assets/images/card/inFrame/past/content/*.png'),
+  ...import.meta.globEager('../assets/images/card/inFrame/present/*.png'),
+  ...import.meta.globEager('../assets/images/card/inFrame/present/content/*.png'),
+  ...import.meta.globEager('../assets/images/card/inFrame/future/*.png'),
+  ...import.meta.globEager('../assets/images/card/inFrame/future/content/*.png'),
+};
 
-// 計算已選擇的卡牌數量
+// 计算已选择的卡牌数量
 function countSelectedCards() {
-    let selectedCount = 0;
-    tarotCards.forEach(function(card) {
-        if (card.style.transform === "translateY(-30px)") {
-            selectedCount++;
-        }
-    });
-    return selectedCount;
+  let selectedCount = 0;
+  tarotCards.forEach(function(card) {
+    if (card.style.transform === "translateY(-30px)") {
+      selectedCount++;
+    }
+  });
+  return selectedCount;
 }
 
-// 點擊 tarotCards 時切換選擇狀態
+// 点击 tarotCards 时切换选择状态
 tarotCards.forEach(function(card) {
-    card.addEventListener("click", function() {
-        let selectedCount = countSelectedCards();
-        if (selectedCount < 3 || card.style.transform === "translateY(-30px)") {
-            if (card.style.transform === "translateY(-30px)") {
-                card.style.transform = "translateY(0px)";
-            } else {
-                card.style.transform = "translateY(-30px)";
-            }
-        } else {
-            alert("最多只能選擇三枚卡牌。");
-        }
-    });
-});
-
-// 點擊 tarotButton 時執行的函數
-tarotButton.addEventListener("click", function() {
+  card.addEventListener("click", function() {
     let selectedCount = countSelectedCards();
-
-    if (selectedCount < 3) {
-        alert("請選滿三枚卡牌。");
-        return;
+    if (selectedCount < 3 || card.style.transform === "translateY(-30px)") {
+      card.style.transform = card.style.transform === "translateY(-30px)" ? "translateY(0px)" : "translateY(-30px)";
+    } else {
+      alert("最多只能选择三张卡牌。");
     }
-
-    // 設定圖片路徑
-    let paths = [
-        "../assets/images/card/inFrame/past/",
-        "../assets/images/card/inFrame/present/",
-        "../assets/images/card/inFrame/future/"
-    ];
-
-    // 隨機不重複地選取圖片
-    let images = ["I.png", "II.png", "III.png", "IV.png", "V.png", "VI.png", "VII.png", "VIII.png", "IX.png", "X.png", "XI.png", "XII.png", "XIII.png", "XIV.png", "XV.png", "XVI.png", "XVII.png", "XVIII.png", "XIX.png", "XX.png", "XXI.png", "O.png"];
-    let randomImages = shuffleArray(images);
-
-    // 更新圖片路徑並添加轉牌動畫效果
-    paths.forEach(function(path, index) {
-        updateImagePath(path, `imageModal-${index + 1}`, "CARDB", randomImages[index]);
-        let resultImg = document.querySelector(`[data-bs-target="#imageModal-${index + 1}"] img`);
-        resultImg.classList.add("flip-animation");
-        setTimeout(function() {
-            resultImg.classList.remove("flip-animation");
-        }, 1000);
-    });
-
-    // 將已選擇的卡牌恢復到 translateY(0px)
-    tarotCards.forEach(function(card) {
-        card.style.transform = "translateY(0px)";
-    });
+  });
 });
 
+// 点击 tarotButton 时执行的函数
+tarotButton.addEventListener("click", function() {
+  let selectedCount = countSelectedCards();
 
-// 更新圖片路徑的函數，使用 baseUrl 和 URL 构造函数来确保路径正确
+  if (selectedCount < 3) {
+    alert("请选择满三张卡牌。");
+    return;
+  }
+
+  selectAndDisplayImages(); // 使用新的图片选择和显示逻辑
+
+  // 将已选择的卡牌恢复到 translateY(0px)
+  tarotCards.forEach(function(card) {
+    card.style.transform = "translateY(0px)";
+  });
+});
+
+// 更新图片路径
 function updateImagePath(path, modalId, fallback, imageIndex) {
-    // 构建正确的 imagePath
-    let imagePath = new URL(`${path}${imageIndex}`, baseUrl).href;
-    let fallbackPath = new URL(`${path}${fallback}`, baseUrl).href;
-
-    let modalBody = document.getElementById(modalId).querySelector(".modal-body img");
-    modalBody.src = imagePath;
-
-    let resultImage = document.querySelector(`[data-bs-target="#${modalId}"] img`);
-    resultImage.src = imagePath || fallbackPath;
+  const imagePath = getImagePath(`${path}${imageIndex}`);
+  let modalBody = document.getElementById(modalId).querySelector(".modal-body img");
+  modalBody.src = imagePath || fallback; // 使用动态导入的路径或回退到默认图片
+  let resultImage = document.querySelector(`[data-bs-target="#${modalId}"] img`);
+  resultImage.src = imagePath || fallback; // 使用动态导入的路径或回退到默认图片
 }
 
-// 洗牌函數
+// 获取图片路径
+function getImagePath(imageKey) {
+  const imagePathKey = Object.keys(cardImages).find(key => key.endsWith(`${imageKey}.png`));
+  return cardImages[imagePathKey]?.default;
+}
+
+// 随机选择图片并更新 DOM
+function selectAndDisplayImages() {
+  const paths = ["past/", "present/", "future/"];
+  const fallback = '../assets/images/card/inFrame/CARDB.png'; // 定义回退图片路径
+  paths.forEach((path, index) => {
+    const imageIndex = getRandomImageKey(); // 随机获取一个图片的关键词
+    updateImagePath(path, `imageModal-${index + 1}`, fallback, imageIndex);
+    let resultImg = document.querySelector(`[data-bs-target="#imageModal-${index + 1}"] img`);
+    resultImg.classList.add("flip-animation");
+    setTimeout(function() {
+      resultImg.classList.remove("flip-animation");
+    }, 1000);
+  });
+}
+
+// 随机获取图片关键词
+function getRandomImageKey() {
+  const keys = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI", "O"];
+  const randomIndex = Math.floor(Math.random() * keys.length);
+  return keys[randomIndex];
+}
+
+// 洗牌函数
 function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
