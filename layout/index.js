@@ -1,5 +1,5 @@
-let tarotButton = document.querySelector(".tarot-button");
 let tarotCards = document.querySelectorAll(".tarot-card-back");
+let tarotButton = document.querySelector(".tarot-button");
 
 // 計算已選擇的卡牌數量
 function countSelectedCards() {
@@ -55,7 +55,7 @@ tarotButton.addEventListener("click", function() {
         resultImg.classList.add("flip-animation");
         setTimeout(function() {
             resultImg.classList.remove("flip-animation");
-        }, 1200);
+        }, 1000);
     });
 
     // 將已選擇的卡牌恢復到 translateY(0px)
@@ -65,14 +65,17 @@ tarotButton.addEventListener("click", function() {
 });
 
 
-// 更新圖片路徑
+// 更新圖片路徑的函數
 function updateImagePath(path, modalId, fallback, imageIndex) {
-    let imagePath = path + imageIndex;
+    // 使用 import.meta.env.BASE_URL 獲得基礎URL
+    const baseUrl = import.meta.env.BASE_URL;
+    let imagePath = baseUrl + path + imageIndex; // 構建完整的圖片路徑
     let modalBody = document.getElementById(modalId).querySelector(".modal-body img");
     modalBody.src = imagePath.replace(/\/[^\/]+$/, "/content/" + imageIndex);
     let resultImage = document.querySelector(`[data-bs-target="#${modalId}"] img`);
     resultImage.src = imagePath;
 }
+
 
 // 洗牌函數
 function shuffleArray(array) {
