@@ -1,8 +1,8 @@
 let tarotCards = document.querySelectorAll(".tarot-card-back");
 let tarotButton = document.querySelector(".tarot-button");
 
-const cardImages = import.meta.glob('../assets/images/card/inFrame/*/*.png', { eager: true });
-
+// 获取基础 URL 路径，假设你的静态资源放在 public/assets 目录下
+const baseUrl = new URL('../assets/', import.meta.url);
 
 // 計算已選擇的卡牌數量
 function countSelectedCards() {
@@ -68,20 +68,18 @@ tarotButton.addEventListener("click", function() {
 });
 
 
-// 更新圖片路徑
+// 更新圖片路徑的函數，使用 baseUrl 和 URL 构造函数来确保路径正确
 function updateImagePath(path, modalId, fallback, imageIndex) {
-    // 假设 imageIndex 为 "I.png"，构造搜索键的正则表达式
-    const regex = new RegExp(`/${imageIndex}$`);
-    // 搜索匹配的图像资源路径
-    const imagePathKey = Object.keys(cardImages).find(key => regex.test(key));
-    const imagePath = cardImages[imagePathKey].default;
+    // 构建正确的 imagePath
+    let imagePath = new URL(`${path}${imageIndex}`, baseUrl).href;
+    let fallbackPath = new URL(`${path}${fallback}`, baseUrl).href;
 
     let modalBody = document.getElementById(modalId).querySelector(".modal-body img");
-    modalBody.src = imagePath; // 使用动态导入的路径
-    let resultImage = document.querySelector(`[data-bs-target="#${modalId}"] img`);
-    resultImage.src = imagePath; // 使用动态导入的路径
-}
+    modalBody.src = imagePath;
 
+    let resultImage = document.querySelector(`[data-bs-target="#${modalId}"] img`);
+    resultImage.src = imagePath || fallbackPath;
+}
 
 // 洗牌函數
 function shuffleArray(array) {
