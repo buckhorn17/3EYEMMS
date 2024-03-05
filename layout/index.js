@@ -1,98 +1,108 @@
-let tarotCards = document.querySelectorAll(".tarot-card-back");
-let tarotButton = document.querySelector(".tarot-button");
+document.addEventListener("DOMContentLoaded", function () {
+    let tarotButton = document.querySelector(".tarot-button");
+    let tarotCards = document.querySelectorAll(".tarot-card-back");
 
-// 动态导入卡牌图像资源
-const cardImages = {
-  ...import.meta.globEager('../assets/images/card/inFrame/past/*.png'),
-  ...import.meta.globEager('../assets/images/card/inFrame/past/content/*.png'),
-  ...import.meta.globEager('../assets/images/card/inFrame/present/*.png'),
-  ...import.meta.globEager('../assets/images/card/inFrame/present/content/*.png'),
-  ...import.meta.globEager('../assets/images/card/inFrame/future/*.png'),
-  ...import.meta.globEager('../assets/images/card/inFrame/future/content/*.png'),
-};
-
-// 计算已选择的卡牌数量
-function countSelectedCards() {
-  let selectedCount = 0;
-  tarotCards.forEach(function(card) {
-    if (card.style.transform === "translateY(-30px)") {
-      selectedCount++;
+    // 讀取 tarot-all.html 內容
+    async function loadTarotPaths() {
+        let response = await fetch('tarot-all.html');
+        let text = await response.text();
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(text, 'text/html');
+        return {
+            past: Array.from(doc.querySelectorAll('.tarot-past img')).map(img => img.src),
+            present: Array.from(doc.querySelectorAll('.tarot-present img')).map(img => img.src),
+            future: Array.from(doc.querySelectorAll('.tarot-future img')).map(img => img.src),
+            pastContent: Array.from(doc.querySelectorAll('.tarot-past-content img')).map(img => img.src),
+            presentContent: Array.from(doc.querySelectorAll('.tarot-present-content img')).map(img => img.src),
+            futureContent: Array.from(doc.querySelectorAll('.tarot-future-content img')).map(img => img.src)
+        };
     }
-  });
-  return selectedCount;
-}
 
-// 点击 tarotCards 时切换选择状态
-tarotCards.forEach(function(card) {
-  card.addEventListener("click", function() {
-    let selectedCount = countSelectedCards();
-    if (selectedCount < 3 || card.style.transform === "translateY(-30px)") {
-      card.style.transform = card.style.transform === "translateY(-30px)" ? "translateY(0px)" : "translateY(-30px)";
-    } else {
-      alert("最多只能选择三张卡牌。");
+    // 計算已選擇的卡牌數量
+    function countSelectedCards() {
+        let selectedCount = 0;
+        tarotCards.forEach(function (card) {
+            if (card.style.transform === "translateY(-30px)") {
+                selectedCount++;
+            }
+        });
+        return selectedCount;
     }
-  });
+
+    // 點擊 tarotCards 時切換選擇狀態
+    tarotCards.forEach(function (card) {
+        card.addEventListener("click", function () {
+            let selectedCount = countSelectedCards();
+            if (selectedCount < 3 || card.style.transform === "translateY(-30px)") {
+                if (card.style.transform === "translateY(-30px)") {
+                    card.style.transform = "translateY(0px)";
+                } else {
+                    card.style.transform = "translateY(-30px)";
+                }
+            } else {
+                alert("最多只能選擇三枚卡牌。");
+            }
+        });
+    });
+
+    // 點擊 tarotButton 時執行的函數
+    tarotButton.addEventListener("click", async function () {
+        let selectedCount = countSelectedCards();
+
+        if (selectedCount < 3) {
+            alert("請選滿三枚卡牌。");
+            return;
+        }
+
+        let tarotPaths = await loadTarotPaths();
+
+        // 獲取不重複的圖片索引
+        let selectedIndexes = getUniqueRandomIndexes(tarotPaths.past.length, 3);
+
+        // 根據索引選取圖片路徑
+        let selectedPast = tarotPaths.past[selectedIndexes[0]];
+        let selectedPresent = tarotPaths.present[selectedIndexes[1]];
+        let selectedFuture = tarotPaths.future[selectedIndexes[2]];
+
+        // 更新圖片路徑
+        updateImagePath('tarot-result', 'imageModal-1', selectedPast, tarotPaths.pastContent.find(p => p.includes(selectedPast.split('/').pop())));
+        updateImagePath('tarot-result', 'imageModal-2', selectedPresent, tarotPaths.presentContent.find(p => p.includes(selectedPresent.split('/').pop())));
+        updateImagePath('tarot-result', 'imageModal-3', selectedFuture, tarotPaths.futureContent.find(p => p.includes(selectedFuture.split('/').pop())));
+
+        // 將已選擇的卡牌恢復到 translateY(0px)
+        tarotCards.forEach(function (card) {
+            card.style.transform = "translateY(0px)";
+        });
+    });
+
+    // 生成一組唯一的隨機索引
+    function getUniqueRandomIndexes(max, count) {
+        let indexes = [];
+        while (indexes.length < count) {
+            let index = Math.floor(Math.random() * max);
+            if (!indexes.includes(index)) {
+                indexes.push(index);
+            }
+        }
+        return indexes;
+    }
+
+
+
+    // 更新圖片路徑
+    function updateImagePath(targetClass, modalId, newSrc, newContentSrc) {
+        let modalBody = document.getElementById(modalId).querySelector(".modal-body img");
+        modalBody.src = newContentSrc;
+        let resultImage = document.querySelector(`[data-bs-target="#${modalId}"] img`);
+        resultImage.src = newSrc;
+    }
+
+    // 洗牌函數
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
 });
-
-// 点击 tarotButton 时执行的函数
-tarotButton.addEventListener("click", function() {
-  let selectedCount = countSelectedCards();
-
-  if (selectedCount < 3) {
-    alert("请选择满三张卡牌。");
-    return;
-  }
-
-  selectAndDisplayImages(); // 使用新的图片选择和显示逻辑
-
-  // 将已选择的卡牌恢复到 translateY(0px)
-  tarotCards.forEach(function(card) {
-    card.style.transform = "translateY(0px)";
-  });
-});
-
-// 更新图片路径
-function updateImagePath(path, modalId, fallback, imageIndex) {
-  const imagePath = getImagePath(`${path}${imageIndex}`);
-  let modalBody = document.getElementById(modalId).querySelector(".modal-body img");
-  modalBody.src = imagePath || fallback; // 使用动态导入的路径或回退到默认图片
-  let resultImage = document.querySelector(`[data-bs-target="#${modalId}"] img`);
-  resultImage.src = imagePath || fallback; // 使用动态导入的路径或回退到默认图片
-}
-
-// 获取图片路径
-function getImagePath(imageKey) {
-  const imagePathKey = Object.keys(cardImages).find(key => key.endsWith(`${imageKey}.png`));
-  return cardImages[imagePathKey]?.default;
-}
-
-// 随机选择图片并更新 DOM
-function selectAndDisplayImages() {
-  const paths = ["past/", "present/", "future/"];
-  const fallback = '../assets/images/card/inFrame/CARDB.png'; // 定义回退图片路径
-  paths.forEach((path, index) => {
-    const imageIndex = getRandomImageKey(); // 随机获取一个图片的关键词
-    updateImagePath(path, `imageModal-${index + 1}`, fallback, imageIndex);
-    let resultImg = document.querySelector(`[data-bs-target="#imageModal-${index + 1}"] img`);
-    resultImg.classList.add("flip-animation");
-    setTimeout(function() {
-      resultImg.classList.remove("flip-animation");
-    }, 1000);
-  });
-}
-
-// 随机获取图片关键词
-function getRandomImageKey() {
-  const keys = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI", "O"];
-  const randomIndex = Math.floor(Math.random() * keys.length);
-  return keys[randomIndex];
-}
-
-// 洗牌函数
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
