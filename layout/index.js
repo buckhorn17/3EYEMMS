@@ -89,13 +89,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    // 更新圖片路徑
-    function updateImagePath(targetClass, modalId, newSrc, newContentSrc) {
-        let modalBody = document.getElementById(modalId).querySelector(".modal-body img");
-        modalBody.src = newContentSrc;
-        let resultImage = document.querySelector(`[data-bs-target="#${modalId}"] img`);
-        resultImage.src = newSrc;
-    }
+// 更新圖片路徑函數，確保正確處理 GitHub Pages 上的絕對路徑
+function updateImagePath(targetClass, modalId, selectedPath, selectedContentPath) {
+    // 從選擇的路徑中提取文件名
+    let fileName = selectedPath.split('/').pop();
+    let contentFileName = selectedContentPath.split('/').pop();
+
+    // 構建 GitHub Pages 的絕對路徑
+    let basePath = 'https://buckhorn17.github.io/3EYEMMS/assets/images/card/inFrame/';
+    let newSrc = `${basePath}${fileName}`;
+    let newContentSrc = `${basePath}content/${contentFileName}`;
+
+    // 更新 tarot-result 的圖片 src
+    let resultImage = document.querySelector(`[data-bs-target="#${modalId}"] img`);
+    if(resultImage) resultImage.src = newSrc;
+
+    // 更新 tarot-lightBox 的圖片 src
+    let modalBody = document.getElementById(modalId).querySelector(".modal-body img");
+    if(modalBody) modalBody.src = newContentSrc;
+}
+
 
     // 洗牌函數
     function shuffleArray(array) {
